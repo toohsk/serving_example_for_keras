@@ -10,8 +10,8 @@ OUTPUT_FILE = 'output.png'
 
 app = Flask(__name__)
 
-global model, graph
-model, graph = init()
+global model
+model = init()
 
 
 @app.route('/')
@@ -30,10 +30,9 @@ def predict():
     x = imresize(x, (28, 28))
     x = x.reshape(1, 28, 28, 1)
 
-    with graph.as_default():
-        out = model.predict(x)
-        res = np.array_str(np.argmax(out, axis=1))
-        return res
+    out = model.predict(x)
+    res = np.array_str(np.argmax(out, axis=1))
+    return res
 
 
 def convert_img(img_data):
